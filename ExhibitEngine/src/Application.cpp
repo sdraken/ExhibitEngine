@@ -7,22 +7,26 @@
 
 namespace ExhibitEngine {
 
-	Application::Application()
-	{
-		window = &(Window::getInstance());
-		window->initialize();
+	Application::Application(){
+		window.initilize();
 	}
 
-	void Application::run()
-	{
-		while (window->processEventSlow()) {
+	Application::~Application(){
+		window.shutDown();
+	}
+
+	void Application::run(){
+		while (window.processEventSlow()) {
 
 		}
 	}
 
 }
 
-int main() {
+
+int main(){
+
 	ExhibitEngine::Application app;
+
 	app.run();
 }

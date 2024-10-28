@@ -1,16 +1,15 @@
 #include "Window.h"
 #include <stdexcept>
 
-namespace ExhibitEngine {
+namespace ExhibitEngine{
 
-	void Window::initialize()
-	{
+	void Window::initilize(){
 		
 		instanceHandle = GetModuleHandle(NULL);
 
-		std::cout << "test\n";
+		if (!instanceHandle)throw std::runtime_error("failed to get instance handle");	//TODO: ASSERT
 		
-		const wchar_t appName[5] = L"name";
+		const wchar_t appName[14] = L"ExhibitEngine";
 		WNDCLASSEX windowClass = { 0 };
 
 		windowClass.cbSize = sizeof(WNDCLASSEX);
@@ -26,7 +25,7 @@ namespace ExhibitEngine {
 		windowClass.lpszClassName = appName;
 		windowClass.hIconSm = LoadIcon(windowClass.hInstance, IDI_APPLICATION);
 
-		if (!RegisterClassEx(&windowClass)) throw std::runtime_error("failed to register class");
+		if (!RegisterClassEx(&windowClass)) throw std::runtime_error("failed to register class");	//TODO: ASSERT
 
 		windowHandle = CreateWindow(
 			appName,
@@ -41,15 +40,18 @@ namespace ExhibitEngine {
 			instanceHandle,
 			NULL);
 
-		if (!windowHandle)throw std::runtime_error("failed to create window");
+		if (!windowHandle)throw std::runtime_error("failed to create window");	//TODO: ASSERT
 
 		ShowWindow(windowHandle, SW_SHOW);
 		SetForegroundWindow(windowHandle);
 		SetFocus(windowHandle);
 	}
 
-	BOOL Window::processEventSlow()
+	void Window::shutDown()
 	{
+	}
+
+	BOOL Window::processEventSlow(){
 		MSG message;
 		BOOL returnValue = GetMessage(&message, NULL, 0, 0);
 		TranslateMessage(&message);
@@ -58,8 +60,7 @@ namespace ExhibitEngine {
 		return returnValue;
 	}
 
-	LRESULT Window::windowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam)
-	{
+	LRESULT Window::windowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam){
 		switch (message) {
 		case WM_DESTROY:
 			DestroyWindow(windowHandle);

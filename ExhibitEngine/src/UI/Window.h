@@ -5,27 +5,20 @@
 
 namespace ExhibitEngine {
 
-	class Window
-	{
+	class Window{
 	public:
-        static Window& getInstance()
-        {
-            static Window instance; // Guaranteed to be destroyed.
-            // Instantiated on first use.
-            return instance;
-        }
+		Window():instanceHandle(NULL), windowHandle(NULL){}
+		~Window(){}
 
-		void initialize();
+		void initilize();
+		void shutDown();
 
 		BOOL processEventSlow();
 
-		Window(Window const&) = delete;
-		void operator=(Window const&) = delete;
 
 	private:
-		Window(){}
-		HINSTANCE instanceHandle = NULL;
-		HWND windowHandle = NULL;
+		HINSTANCE instanceHandle;
+		HWND windowHandle;
 
 		static LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
