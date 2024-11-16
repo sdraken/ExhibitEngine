@@ -1,3 +1,8 @@
+//	Description: Implementation of Window class. Comments aren't a high priority since the implementation is mostly
+//				 derived from the official programming reference for the Win32 API.
+//
+//	Author: Svante Drakenberg
+
 #include "Window.h"
 
 namespace ExhibitEngine{

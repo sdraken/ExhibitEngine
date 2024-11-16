@@ -1,18 +1,26 @@
-﻿// no console #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+﻿//	Description: Implementation of Application class
+//
+//	Author: Svante Drakenberg
+
+// no console #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+
 #include "Application.h"
 
 namespace ExhibitEngine {
 
+	//Components are initalized in the correct order
 	Application::Application(){
 		logger.initalize();
 		window.initilize();
 	}
 
+	//Components are shut down in the correct order
 	Application::~Application(){
 		window.shutDown();
 		logger.shutDown();
 	}
 
+	//start loop
 	void Application::run(){
 
 		//testing Logger and BumpAllcator

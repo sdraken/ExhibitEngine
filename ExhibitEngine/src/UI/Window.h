@@ -1,3 +1,8 @@
+//	Description: The Window class handles the creation and managing of the window. this will only support Windows operating systems initially. 
+//				 Currently very basic, creates a window that can process basic events.
+//
+//	Author: Svante Drakenberg
+
 #pragma once
 #define UNICODE
 #include "Windows.h"

@@ -1,13 +1,21 @@
+//	Description: Implementation of Logger class.
+//
+//	Author: Svante Drakenberg
+
+
 #include "Logger.h"
 
+//initalizer opens logfile
 void ExhibitEngine::Logger::initalize(){
 	outputLocation = fopen(LOGFILENAME, "a");
 }
 
+//Close logfile
 void ExhibitEngine::Logger::shutDown(){
 	fclose(outputLocation);
 }
 
+//Given a loglevel, returns its string representation 
 const char* ExhibitEngine::Logger::getLogLevelString(LogLevel loglevel){
 	switch (loglevel)
 	{
@@ -22,6 +30,7 @@ const char* ExhibitEngine::Logger::getLogLevelString(LogLevel loglevel){
 	}
 }
 
+//Update the timeBuffer buffer containing the current time
 void ExhibitEngine::Logger::updateTimeBuffer(){
 	auto now = std::chrono::system_clock::now();
 	auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
