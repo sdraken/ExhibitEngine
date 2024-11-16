@@ -1,9 +1,5 @@
-#include <cstddef>
-#include <new>  // for std::bad_alloc
-#include <memory>
+#include "../Logging/Logger.h"
 
-#include "iostream"
-//IS IT BETTER IF WE EXPLICITLY DECLARE THE CLASS AND ITS VALUES???
 struct BumpAllocatorMemory {
 
 protected:
@@ -18,7 +14,7 @@ struct BumpAllocator : BumpAllocatorMemory {
 
     // Constructor
     BumpAllocator(){
-        std::cout << "constructing allocator" << std::endl;
+        LOGDEBUG("Constructing instance of custom allocator.");
     }
 
     // Copy constructor
@@ -29,15 +25,14 @@ struct BumpAllocator : BumpAllocatorMemory {
 
     // Allocate memory from the preallocated pool
     T* allocate(std::size_t n) {
-        std::cout << "Trying to allocate" << n << " "<< typeid(T).name() << " for a total of " << n*sizeof(T) << "bytes, "<< memorySize - offset << " bytes available" << std::endl;
         // Calculate the required space and ensure it does not exceed pool size
         size_t requiredMemory = n * sizeof(T);
         if (requiredMemory > memorySize - offset) {
-            throw std::bad_alloc(); // If not enough memory, throw an exception
+            LOGFATAL("Tried allocating %d bytes (%d %s), not enough memory", n * sizeof(T), n, typeid(T).name());
         }
         T* ptr = reinterpret_cast<T*>(&buffer[offset]);
         offset += requiredMemory;
-        std::cout << "successcull allocation, " << memorySize- offset << " bytes left"  << std::endl;
+        LOGDEBUG("%d/%d bytes in use after allocating %d bytes (%d %s)", offset, memorySize, n * sizeof(T), n, typeid(T).name());
         return ptr;
     }
 

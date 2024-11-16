@@ -1,15 +1,12 @@
 #pragma once
 #define UNICODE
 #include "Windows.h"
-#include <iostream>
+#include "../Logging/Logger.h"
 
 namespace ExhibitEngine {
 
 	class Window{
 	public:
-		Window():instanceHandle(NULL), windowHandle(NULL){}
-		~Window(){}
-
 		void initilize();
 		void shutDown();
 

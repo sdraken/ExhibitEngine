@@ -1,5 +1,4 @@
 #include "Window.h"
-#include <stdexcept>
 
 namespace ExhibitEngine{
 
@@ -7,7 +6,7 @@ namespace ExhibitEngine{
 		
 		instanceHandle = GetModuleHandle(NULL);
 
-		if (!instanceHandle)throw std::runtime_error("failed to get instance handle");	//TODO: ASSERT
+		if (!instanceHandle)LOGFATAL("failed to get instance handle");
 		
 		const wchar_t appName[14] = L"ExhibitEngine";
 		WNDCLASSEX windowClass = { 0 };
@@ -25,9 +24,9 @@ namespace ExhibitEngine{
 		windowClass.lpszClassName = appName;
 		windowClass.hIconSm = LoadIcon(windowClass.hInstance, IDI_APPLICATION);
 
-		if (!RegisterClassEx(&windowClass)) throw std::runtime_error("failed to register class");	//TODO: ASSERT
+		if (!RegisterClassEx(&windowClass)) LOGFATAL("failed to register class");
 
-		windowHandle = CreateWindow(
+		_Notnull_ windowHandle = CreateWindow(
 			appName,
 			appName,
 			WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
@@ -40,10 +39,11 @@ namespace ExhibitEngine{
 			instanceHandle,
 			NULL);
 
-		if (!windowHandle)throw std::runtime_error("failed to create window");	//TODO: ASSERT
 
-		ShowWindow(windowHandle, SW_SHOW);
-		SetForegroundWindow(windowHandle);
+		if (!windowHandle)LOGFATAL("failed to create window");
+
+		ShowWindow(_Notnull_ windowHandle, SW_SHOW);
+		SetForegroundWindow(_Notnull_ windowHandle);
 		SetFocus(windowHandle);
 	}
 
