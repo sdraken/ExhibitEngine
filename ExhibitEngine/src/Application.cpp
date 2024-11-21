@@ -12,21 +12,18 @@ namespace ExhibitEngine {
 	Application::Application(){
 		logger.initalize();
 		window.initilize();
+		renderer.initilize();
 	}
 
 	//Components are shut down in the correct order
 	Application::~Application(){
+		renderer.shutDown();
 		window.shutDown();
 		logger.shutDown();
 	}
 
 	//start loop
 	void Application::run(){
-
-		//testing Logger and BumpAllcator
-		std::vector<int, BumpAllocator<int>> vec1 = { 1,2,3 };
-		std::vector<char, BumpAllocator<char>> vec2 = { '1','2','3' };
-		std::vector<int, BumpAllocator<int>> vec3 = { 1,2,3 };
 
 		while (window.processEventSlow()) {
 
