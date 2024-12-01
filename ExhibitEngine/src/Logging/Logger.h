@@ -33,7 +33,7 @@ namespace ExhibitEngine{
 	private:
 		char outputBuffer[1000];
 		char timeBuffer[30];
-		FILE* outputLocation = NULL;
+		FILE* outputLocation = fopen(LOGFILENAME, "a");
 
 		const char* getLogLevelString(LogLevel loglevel);
 

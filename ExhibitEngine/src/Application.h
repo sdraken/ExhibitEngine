@@ -9,7 +9,7 @@
 
 #include "Logging/Logger.h"
 #include "UI/Window.h"
-#include "Renderer/Renderer.h"
+#include "Renderer/VulkanInstance.h"
 
 
 namespace ExhibitEngine {
@@ -21,7 +21,7 @@ namespace ExhibitEngine {
 	//Component responsible for creating/managing window
 	Window window;
 	//Component responsible for rendering
-	Renderer renderer;
+	VulkanInstance renderer;
 
 	class Application{
 	public:

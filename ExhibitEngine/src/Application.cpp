@@ -12,7 +12,7 @@ namespace ExhibitEngine {
 	Application::Application(){
 		logger.initalize();
 		window.initilize();
-		renderer.initilize();
+		renderer.initilize(window.getHINSTANCE(), window.getHWND());
 	}
 
 	//Components are shut down in the correct order

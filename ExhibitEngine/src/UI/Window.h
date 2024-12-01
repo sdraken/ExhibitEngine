@@ -5,7 +5,8 @@
 
 #pragma once
 #define UNICODE
-#include "Windows.h"
+#define WIN32_LEAN_AND_MEAN      // Exclude rarely-used stuff from Windows headers
+#include <windows.h>
 #include "../Logging/Logger.h"
 
 namespace ExhibitEngine {
@@ -17,7 +18,8 @@ namespace ExhibitEngine {
 
 		BOOL processEventSlow();
 
-
+		HINSTANCE getHINSTANCE() { return instanceHandle; }
+		HWND getHWND(){ return windowHandle; }
 	private:
 		HINSTANCE instanceHandle;
 		HWND windowHandle;

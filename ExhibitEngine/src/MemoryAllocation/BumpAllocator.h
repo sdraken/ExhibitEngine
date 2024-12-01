@@ -7,7 +7,7 @@
 //               across datypes/container.
 //
 //	Author: Svante Drakenberg
-
+#pragma once
 #include "../Logging/Logger.h"
 
 
