@@ -2,16 +2,21 @@
 //
 //	Author: Svante Drakenberg
 
+//Just for intelisense
+#ifndef VK_USE_PLATFORM_WIN32_KHR
+#define VK_USE_PLATFORM_WIN32_KHR
+#endif
+
+
+#define VOLK_IMPLEMENTATION
 #include "VulkanInstance.h"
 
 
 
 namespace ExhibitEngine {
     
-
     void VulkanInstance::initilize(HINSTANCE instanceHandle, HWND windowHandle)
     {
-        LOGDEBUG("%d", _MSVC_LANG);
         createInstance();
         setupDebugMessenger();
         createSurface(instanceHandle, windowHandle);
@@ -60,7 +65,7 @@ namespace ExhibitEngine {
         VkInstanceCreateInfo createInfo{};
         createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;                  //sType
         createInfo.pNext = NULL;                                                    //pNext
-        createInfo.flags = NULL;                                                    //flags
+        createInfo.flags = 0;                                                    //flags
         createInfo.pApplicationInfo = &appInfo;                                     //pApplicationInfo
         createInfo.enabledLayerCount = layers.size();                               //enabledLayerCount
         createInfo.ppEnabledLayerNames = layers.data();                             //ppEnabledLayerNames
@@ -183,9 +188,9 @@ namespace ExhibitEngine {
         createInfo.hinstance = instanceHandle;
         createInfo.hwnd = windowHandle;
         
-        //if (vkCreateWin32SurfaceKHR(instance, &createInfo, nullptr, &surface) != VK_SUCCESS) {
-        //    LOGFATAL("failed to create surface!");
-        //}
+        if (vkCreateWin32SurfaceKHR(instance, &createInfo, nullptr, &surface) != VK_SUCCESS) {
+           LOGFATAL("failed to create surface!");
+        }
     }
 
     void VulkanInstance::createDevice()

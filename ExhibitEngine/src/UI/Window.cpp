@@ -31,7 +31,7 @@ namespace ExhibitEngine{
 
 		if (!RegisterClassEx(&windowClass)) LOGFATAL("failed to register class");
 
-		_Notnull_ windowHandle = CreateWindow(
+		windowHandle = CreateWindow(
 			appName,
 			appName,
 			WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
@@ -47,8 +47,8 @@ namespace ExhibitEngine{
 
 		if (!windowHandle)LOGFATAL("failed to create window");
 
-		ShowWindow(_Notnull_ windowHandle, SW_SHOW);
-		SetForegroundWindow(_Notnull_ windowHandle);
+		ShowWindow(windowHandle, SW_SHOW);
+		SetForegroundWindow(windowHandle);
 		SetFocus(windowHandle);
 	}
 

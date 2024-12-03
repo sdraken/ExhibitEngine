@@ -1,7 +1,7 @@
 
 
 #pragma once
-#include <volk/volk.h>
+#include "volk.h"
 #include "../MemoryAllocation/BumpAllocator.h"
 #include "../Logging/Logger.h"
 #include <vector>

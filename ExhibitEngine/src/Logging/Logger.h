@@ -11,7 +11,7 @@
 
 #pragma once
 #include <chrono>
-
+#include <cstdio>
 #define LOGFILENAME "logs.txt"
 
 namespace ExhibitEngine{

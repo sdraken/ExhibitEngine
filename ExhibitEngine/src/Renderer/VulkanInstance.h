@@ -8,12 +8,12 @@
 //	Author: Svante Drakenberg
 
 #pragma once
-#define VK_USE_PLATFORM_WIN32_KHR
-#include <volk/volk.h>
-
+#include "volk.h"
 #include "VulkanDevice.h"
 #include "../MemoryAllocation/BumpAllocator.h"
 #include "../Logging/Logger.h"
+
+#include <cstring>
 
 
 
@@ -28,8 +28,6 @@ const bool enableValidationLayers = true;
 #endif
 
 namespace ExhibitEngine {
-    const char* extensions[];
-    const char* validationLayers[];
 
     class VulkanInstance {
     public:
