@@ -6,6 +6,9 @@ set (CMAKE_CXX_STANDARD 20)
 
 project ("ExhibitEngine")
 
+#build debug or release
+#add_definitions(-DNDEBUG)
+
 # Include sub-projects.
 add_subdirectory ("ExhibitEngine")
 add_subdirectory ("Testbed")

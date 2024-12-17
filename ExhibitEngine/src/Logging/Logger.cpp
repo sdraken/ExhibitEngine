@@ -6,12 +6,12 @@
 #include "Logger.h"
 
 //initalizer opens logfile
-void ExhibitEngine::Logger::initalize(){
+ExhibitEngine::Logger::Logger(){
 	outputLocation = fopen(LOGFILENAME, "a");
 }
 
 //Close logfile
-void ExhibitEngine::Logger::shutDown(){
+ExhibitEngine::Logger::~Logger(){
 	fclose(outputLocation);
 }
 

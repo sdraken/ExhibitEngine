@@ -7,7 +7,7 @@
 
 namespace ExhibitEngine{
 
-	void Window::initilize(){
+	Window::Window(){
 		
 		instanceHandle = GetModuleHandle(NULL);
 
@@ -18,7 +18,7 @@ namespace ExhibitEngine{
 
 		windowClass.cbSize = sizeof(WNDCLASSEX);
 		windowClass.style = CS_HREDRAW | CS_VREDRAW;
-		windowClass.lpfnWndProc = windowProcedure;
+		windowClass.lpfnWndProc = staticWindowProcedure;
 		windowClass.cbClsExtra = 0;
 		windowClass.cbWndExtra = 0;
 		windowClass.hInstance = instanceHandle;
@@ -42,7 +42,7 @@ namespace ExhibitEngine{
 			NULL,
 			NULL,
 			instanceHandle,
-			NULL);
+			this);
 
 
 		if (!windowHandle)LOGFATAL("failed to create window");
@@ -52,34 +52,56 @@ namespace ExhibitEngine{
 		SetFocus(windowHandle);
 	}
 
-	void Window::shutDown()
+	Window::~Window()
 	{
 	}
 
-	BOOL Window::processEventSlow(){
-		MSG message;
-		BOOL returnValue = GetMessage(&message, NULL, 0, 0);
-		TranslateMessage(&message);
-		DispatchMessage(&message);
+    bool Window::processEventSlow()
+    {
+		MSG msg = {};
+        while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+            if (msg.message == WM_QUIT) {
+				return false;
+            }
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+		return true;
+    }
 
-		return returnValue;
-	}
+    LRESULT Window::staticWindowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam)
+    {
 
-	LRESULT Window::windowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam){
-		switch (message) {
-		case WM_DESTROY:
+        if (message == WM_NCCREATE) {
+            // Extract the 'this' pointer from CREATESTRUCT and associate it with the window
+            CREATESTRUCT* pCreate = (CREATESTRUCT*)lParam;
+            Window* pThis = (Window*)pCreate->lpCreateParams;
+            SetWindowLongPtr(windowHandle, GWLP_USERDATA, (LONG_PTR)pThis);
+        } else {
+            // Retrieve the stored 'this' pointer
+            Window* pThis = (Window*)GetWindowLongPtr(windowHandle, GWLP_USERDATA);
+            if (pThis) {
+                return pThis->WindowProcedure(windowHandle, message, wParam, lParam);
+            }
+        }
+
+        return DefWindowProc(windowHandle, message, wParam, lParam);
+    }
+
+    LRESULT Window::WindowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam)
+    {
+        switch (message) {
+		case WM_CLOSE:
 			DestroyWindow(windowHandle);
+			break;
+		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
-		case WM_PAINT:
-			ValidateRect(windowHandle, NULL);
-			break;
-		default:
-			return DefWindowProc(windowHandle, message, wParam, lParam);
+		case WM_SIZE:
+			windowResized = true;
 			break;
 		}
 
-		return 0;
-	}
-
+		return DefWindowProc(windowHandle, message, wParam, lParam);
+    }
 }

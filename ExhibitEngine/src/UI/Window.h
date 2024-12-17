@@ -13,19 +13,21 @@ namespace ExhibitEngine {
 
 	class Window{
 	public:
-		void initilize();
-		void shutDown();
+		Window();
+		~Window();
 
-		BOOL processEventSlow();
+		bool processEventSlow();
 
-		HINSTANCE getHINSTANCE() { return instanceHandle; }
-		HWND getHWND(){ return windowHandle; }
+		const HINSTANCE getHINSTANCE() const{ return instanceHandle; }
+		const HWND getHWND()const{ return windowHandle; }
+		bool& getWindowResized()const {return windowResized;}
 	private:
 		HINSTANCE instanceHandle;
 		HWND windowHandle;
+		mutable bool windowResized = false;
 
-		static LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
+		static LRESULT CALLBACK staticWindowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam);
+		LRESULT WindowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam);
 	};
 
 }

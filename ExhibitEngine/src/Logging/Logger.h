@@ -24,8 +24,8 @@ namespace ExhibitEngine{
 
 	class Logger {
 	public:
-		void initalize();
-		void shutDown();
+		Logger();
+		~Logger();
 
 		template<typename... Ts>
 		void log(LogLevel logLevel, const char* format, Ts... args);

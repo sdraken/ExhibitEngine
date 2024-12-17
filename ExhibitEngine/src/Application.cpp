@@ -6,34 +6,12 @@
 
 #include "Application.h"
 
-namespace ExhibitEngine {
-
-	//Components are initalized in the correct order
-	Application::Application(){
-		logger.initalize();
-		window.initilize();
-		renderer.initilize(window.getHINSTANCE(), window.getHWND());
-	}
-
-	//Components are shut down in the correct order
-	Application::~Application(){
-		renderer.shutDown();
-		window.shutDown();
-		logger.shutDown();
-	}
-
-	//start loop
-	void Application::run(){
-
-		while (window.processEventSlow()) {
-
-		}
-	}
-
-}
-
-
 int main(){
-	ExhibitEngine::Application app;
-	app.run();
+    using namespace ExhibitEngine;
+    bool running = true;
+    while (running) {
+        running = window.processEventSlow();
+
+        renderer.drawFrame();
+	}
 }
