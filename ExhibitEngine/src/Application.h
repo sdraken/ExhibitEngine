@@ -21,6 +21,6 @@ namespace ExhibitEngine {
 	//Component responsible for creating/managing window
 	Window window;
 	//Component responsible for rendering
-	Renderer renderer;
+	Renderer renderer(window);
 
 }

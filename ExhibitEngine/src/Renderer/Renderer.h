@@ -8,14 +8,14 @@
 //	Author: Svante Drakenberg
 
 #pragma once
-#ifndef VK_USE_PLATFORM_WIN32_KHR
-#define VK_USE_PLATFORM_WIN32_KHR
-#endif
-#include "volk.h"
-#include "VulkanContext.h"
-
 #include "../MemoryAllocation/BumpAllocator.h"
 #include "../Logging/Logger.h"
+#include "../UI/Window.h"
+#include "volk.h"
+#include "Context.h"
+#include "SwapChainManager.h"
+#include "PipelineManager.h"
+#include "CommandBufferManager.h"
 
 #include <cstring>
 
@@ -24,14 +24,24 @@ namespace ExhibitEngine {
 
     class Renderer {
     public:
-        void initilize(HINSTANCE instanceHandle, HWND windowHandle);
+        Renderer(const Window& window);
+        ~Renderer();
 
-        void shutDown() const;
-
+        void drawFrame();
     private:
-        VulkanContext context;
-        
+        Context vulkanContext;
+        SwapChainManager swapChainManager;
+        PipelineManager pipelineManager;
+        CommandBufferManager commandBufferManager;
 
+        VkDevice device;
+        std::vector<VkSemaphore> imageAvailableSemaphores;
+        std::vector<VkSemaphore> renderFinishedSemaphores;
+        std::vector<VkFence> inFlightFences;
+        uint32_t currentFrame = 0;
+        bool& framebufferResized;
+
+        void createSyncObjects();
     };
 
 }
