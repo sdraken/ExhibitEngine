@@ -8,8 +8,8 @@
 #pragma once
 
 #include "Logging/Logger.h"
-#include "MemoryAllocation/BumpAllocator.h"
 #include "UI/Window.h"
+#include "Renderer/Renderer.h"
 
 
 namespace ExhibitEngine {
@@ -20,15 +20,7 @@ namespace ExhibitEngine {
 	Logger logger;
 	//Component responsible for creating/managing window
 	Window window;
-
-	class Application{
-	public:
-		Application();
-		~Application();
-
-		void run();
-	private:
-
-	};
+	//Component responsible for rendering
+	Renderer renderer(window);
 
 }

@@ -11,7 +11,7 @@
 
 #pragma once
 #include <chrono>
-
+#include <cstdio>
 #define LOGFILENAME "logs.txt"
 
 namespace ExhibitEngine{
@@ -24,8 +24,8 @@ namespace ExhibitEngine{
 
 	class Logger {
 	public:
-		void initalize();
-		void shutDown();
+		Logger();
+		~Logger();
 
 		template<typename... Ts>
 		void log(LogLevel logLevel, const char* format, Ts... args);
@@ -33,7 +33,7 @@ namespace ExhibitEngine{
 	private:
 		char outputBuffer[1000];
 		char timeBuffer[30];
-		FILE* outputLocation = NULL;
+		FILE* outputLocation = fopen(LOGFILENAME, "a");
 
 		const char* getLogLevelString(LogLevel loglevel);
 
