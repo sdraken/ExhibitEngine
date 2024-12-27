@@ -8,10 +8,15 @@
 //	Author: Svante Drakenberg
 
 #pragma once
+#include "volk.h"
+#include "vk_mem_alloc.h"
+#include "glm/vec3.hpp"
+#include "stb_image.h"
+#include "tiny_obj_loader.h"
+
 #include "../MemoryAllocation/BumpAllocator.h"
 #include "../Logging/Logger.h"
 #include "../UI/Window.h"
-#include "volk.h"
 #include "Context.h"
 #include "SwapChainManager.h"
 #include "PipelineManager.h"

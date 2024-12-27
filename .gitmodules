@@ -1,0 +1,15 @@
+[submodule "ExhibitEngine/ThirdParty/volk"]
+	path = ExhibitEngine/ThirdParty/volk
+	url = git@github.com:zeux/volk.git
+[submodule "ExhibitEngine/ThirdParty/VulkanMemoryAllocator"]
+	path = ExhibitEngine/ThirdParty/VulkanMemoryAllocator
+	url = git@github.com:GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
+[submodule "ExhibitEngine/ThirdParty/glm"]
+	path = ExhibitEngine/ThirdParty/glm
+	url = git@github.com:g-truc/glm.git
+[submodule "ExhibitEngine/ThirdParty/tinyobjloader"]
+	path = ExhibitEngine/ThirdParty/tinyobjloader
+	url = git@github.com:tinyobjloader/tinyobjloader.git
+[submodule "ExhibitEngine/ThirdParty/stb"]
+	path = ExhibitEngine/ThirdParty/stb
+	url = git@github.com:nothings/stb.git
