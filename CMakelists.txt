@@ -1,0 +1,8 @@
+cmake_minimum_required (VERSION 3.29)
+
+project ("ExhibitEngine")
+#add_definitions(-DUNICODE) #for win32 api w functions
+add_executable(ExhibitEngine src/test.cpp)
+
+add_subdirectory(external)
+target_link_libraries(ExhibitEngine PRIVATE externals)

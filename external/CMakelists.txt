@@ -1,0 +1,11 @@
+add_library(externals INTERFACE)
+
+#submodules with
+add_subdirectory(glm)
+add_subdirectory(tinyobjloader)
+add_subdirectory(Vulkan-Headers)
+add_subdirectory(VulkanMemoryAllocator)
+target_link_libraries(externals INTERFACE Vulkan::Headers GPUOpen::VulkanMemoryAllocator glm::glm tinyobjloader)
+
+#includes entire stb directory
+target_include_directories(externals INTERFACE stb/)
