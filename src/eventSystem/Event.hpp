@@ -4,10 +4,12 @@
 #include <cstdint>
 
 // Base Event Class with Type ID Support
-class Event {
-public:
+struct Event {
+    std::int32_t id;
+
+    Event(std::int32_t id) : id(id) {}
+
     virtual ~Event() = default;
-    virtual std::int32_t getID() const = 0;
 
     //gives a unique ID to every subclass of Event
     template <typename T> static std::int32_t getEventID() {
@@ -20,24 +22,24 @@ private:
 };
 
 
-class EventA : public Event {
+struct EventA : public Event {
 public:
     std::int32_t data;
-    EventA(std::int32_t data) : data(data) {}
 
-    // Return the unique type ID for EventA
-    std::int32_t getID() const override {
-        return getEventID<EventA>();
-    }
+    EventA(std::int32_t data) :Event(getEventID<EventA>()), data(data) {}
+
+
 };
 
-class EventB : public Event {
+struct EventB : public Event {
 public:
     std::string message;
-    EventB(const std::string& message) : message(message) {}
+    EventB(const std::string& message) :Event(getEventID<EventB>()), message(message) {}
+};
 
-        // Return the unique type ID for EventA
-    std::int32_t getID() const override {
-        return getEventID<EventB>();
-    }
+struct EventResize : public Event{
+public:
+    std::int32_t newWidth = 0;
+    std::int32_t newHeight = 0;
+    EventResize() :Event(getEventID<EventResize>()){}
 };

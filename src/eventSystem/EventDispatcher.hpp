@@ -23,7 +23,7 @@ class EventDispatcher {
     using Callback = void(*)(Event*);
 
     std::map<std::int32_t, std::vector<Callback>> subscribers;
-    std::queue<std::unique_ptr<Event>> eventQueue;
+    std::queue<Event*> eventQueue;
 
 public:
     // Subscribe to a specific event type
@@ -33,24 +33,23 @@ public:
     }
 
     // Enqueue an event by constructing it in place
-    template <typename EventType, typename... Args>
-    void enqueue(Args&&... args) {
-        eventQueue.push(std::make_unique<EventType>(std::forward<Args>(args)...));
+    void enqueue(Event* event) {
+        eventQueue.push(event);
     }
 
     // Process all events in the queue
     void process() {
         while (!eventQueue.empty()) {
-            std::unique_ptr<Event> event = std::move(eventQueue.front());
+            Event* event = eventQueue.front();
             eventQueue.pop();
-            dispatch(event.get());
+            dispatch(event);
         }
     }
 
 private:
     // Dispatch an event to all relevant callbacks
     void dispatch(Event* event) {
-        auto it = subscribers.find(event->getID());
+        auto it = subscribers.find(event->id);
         if (it != subscribers.end()) {
             for (Callback callback : it->second) {
                 callback(event);
