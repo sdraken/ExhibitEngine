@@ -5,28 +5,28 @@
 
 // Base Event Class with Type ID Support
 struct Event {
-    std::int32_t id;
+    uint32 id;
 
-    Event(std::int32_t id) : id(id) {}
+    Event(uint32 id) : id(id) {}
 
     virtual ~Event() = default;
 
     //gives a unique ID to every subclass of Event
-    template <typename T> static std::int32_t getEventID() {
+    template <typename T> static uint32 getEventID() {
         static_assert(std::is_base_of<Event, T>::value, "T must be a subclass of Base");
-        static const std::int32_t id = nextID++;
+        static const uint32 id = nextID++;
         return id;
     }
 private:
-    static inline std::int32_t nextID = 0; // Thread-safe
+    static inline uint32 nextID = 0; // Thread-safe
 };
 
 
 struct EventA : public Event {
 public:
-    std::int32_t data;
+    uint32 data;
 
-    EventA(std::int32_t data) :Event(getEventID<EventA>()), data(data) {}
+    EventA(uint32 data) :Event(getEventID<EventA>()), data(data) {}
 
 
 };
@@ -39,7 +39,7 @@ public:
 
 struct EventResize : public Event{
 public:
-    std::int32_t newWidth = 0;
-    std::int32_t newHeight = 0;
+    int32 newWidth = 0;
+    int32 newHeight = 0;
     EventResize() :Event(getEventID<EventResize>()){}
 };

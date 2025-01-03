@@ -22,7 +22,7 @@
 class EventDispatcher {
     using Callback = void(*)(Event*);
 
-    std::map<std::int32_t, std::vector<Callback>> subscribers;
+    std::map<uint32, std::vector<Callback>> subscribers;
     std::queue<Event*> eventQueue;
 
 public:

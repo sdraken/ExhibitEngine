@@ -16,8 +16,8 @@ public:
     virtual bool handleEvents() = 0;
     virtual void closeWindow() = 0;
 protected:
-    int width;
-    int height;
+    int32 width;
+    int32 height;
     const char* title = "ExhibitEngine";
     EventDispatcher& eventDispatcher;
     inline static EventResize eventResize;

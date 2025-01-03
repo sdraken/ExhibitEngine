@@ -5,7 +5,7 @@
 
 class Win32Window : public WindowInterface {
 public:
-    Win32Window(EventDispatcher& eventDispatcher, int width, int height):WindowInterface(eventDispatcher, width, height){
+    Win32Window(EventDispatcher& eventDispatcher, int32 width, int32 height):WindowInterface(eventDispatcher, width, height){
         createWindow();
     }
     void createWindow() override {

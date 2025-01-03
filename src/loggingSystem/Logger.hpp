@@ -2,6 +2,7 @@
     -Use a logging queue and a background thread to process logs asynchronously.
     - avoiding dynamic allocations made by std::format/vformat/ofstream
 */
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <mutex>
