@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <cstdint>
 
 // Base Event Class with Type ID Support
 struct Event {
@@ -23,23 +22,20 @@ private:
 
 
 struct EventA : public Event {
-public:
+    EventA(uint32 data = 0) :Event(getEventID<EventA>()), data(data) {}
+    
     uint32 data;
-
-    EventA(uint32 data) :Event(getEventID<EventA>()), data(data) {}
-
-
 };
 
 struct EventB : public Event {
-public:
+    EventB(const std::string& message = "") :Event(getEventID<EventB>()), message(message) {}
+
     std::string message;
-    EventB(const std::string& message) :Event(getEventID<EventB>()), message(message) {}
 };
 
 struct EventResize : public Event{
-public:
-    int32 newWidth = 0;
-    int32 newHeight = 0;
-    EventResize() :Event(getEventID<EventResize>()){}
+    EventResize(int32 newWidth = 0, int32 newHeight= 0) :Event(getEventID<EventResize>()), newWidth(newWidth), newHeight(newHeight){}
+
+    int32 newWidth;
+    int32 newHeight;
 };

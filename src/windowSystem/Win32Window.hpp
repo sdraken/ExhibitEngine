@@ -46,7 +46,7 @@ public:
         if((eventResize.newWidth!= width) || (eventResize.newHeight!=height)){
             width = eventResize.newWidth;
             height = eventResize.newHeight;
-            eventDispatcher.enqueue(&eventResize);
+            eventDispatcher.enqueue(EventResize(width,height));
         }
         return running;
     }

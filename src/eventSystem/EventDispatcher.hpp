@@ -1,4 +1,5 @@
 /* Potential future optimization:
+    - raw function pointers
     - make it so that events can either be put into event queue or immediately processed.
     - Memory Pool to avoid dyanmic allocation
     - Batch events of the same type and process them together.
@@ -15,38 +16,38 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <functional>
 
 #include "Event.hpp"
 
-// EventDispatcher with Event Construction
 class EventDispatcher {
-    using Callback = void(*)(Event*);
-
-    std::map<uint32, std::vector<Callback>> subscribers;
-    std::queue<Event*> eventQueue;
-
 public:
+    using Callback = std::function<void(Event*)>;
     // Subscribe to a specific event type
     template <typename EventType>
     void subscribe(Callback callback) {
         subscribers[Event::getEventID<EventType>()].push_back(callback);
     }
 
-    // Enqueue an event by constructing it in place
-    void enqueue(Event* event) {
-        eventQueue.push(event);
+    // Enqueue an event
+    template <typename EventType>
+    void enqueue(EventType&& event) {
+        eventQueue.push(std::make_unique<EventType>(std::move(event)));
     }
 
     // Process all events in the queue
     void process() {
         while (!eventQueue.empty()) {
-            Event* event = eventQueue.front();
+            std::unique_ptr<Event> event = std::move(eventQueue.front());
             eventQueue.pop();
-            dispatch(event);
+            dispatch(event.get());
         }
     }
 
 private:
+    std::map<uint32, std::vector<Callback>> subscribers;
+    std::queue<std::unique_ptr<Event>> eventQueue;
+
     // Dispatch an event to all relevant callbacks
     void dispatch(Event* event) {
         auto it = subscribers.find(event->id);
