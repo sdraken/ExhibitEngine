@@ -5,7 +5,7 @@
 #include "../eventSystem/EventDispatcher.hpp"
 
 #if defined(_WIN32)
-    #include "../windowSystem/Win32Window.hpp"
+    #include "../windowSystem/win32/Win32Window.hpp"
     using WindowManager = Win32Window;
 #else
     #error "Unsupported platform"

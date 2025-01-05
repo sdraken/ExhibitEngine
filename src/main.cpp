@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
 
     WindowManager window(eventDis, 800, 500);
 
-    while(window.handleEvents()){
+    while(window.processEvents()){
         eventDis.process();
     }
     
