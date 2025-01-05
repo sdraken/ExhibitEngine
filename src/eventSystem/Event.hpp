@@ -1,8 +1,8 @@
 #pragma once
-
 #include <string>
 
-// Base Event Class with Type ID Support
+
+// Base Event Class
 struct Event {
     uint32 id;
 
@@ -12,7 +12,6 @@ struct Event {
 
     //gives a unique ID to every subclass of Event
     template <typename T> static uint32 getEventID() {
-        static_assert(std::is_base_of<Event, T>::value, "T must be a subclass of Base");
         static const uint32 id = nextID++;
         return id;
     }

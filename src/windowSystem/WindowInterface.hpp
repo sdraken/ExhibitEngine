@@ -1,24 +1,24 @@
 #pragma once
+#include "../core/Types.hpp"
 #include "../eventSystem/EventDispatcher.hpp"
 
 class WindowInterface {
 public:
-    WindowInterface(EventDispatcher& eventDispatcher, int width, int height):
+    WindowInterface(EventDispatcher& eventDispatcher):
         eventDispatcher(eventDispatcher),
-        width(width),
-        height(height){
+        running(true),
+        beenResized(false){
     }
 
 
     virtual ~WindowInterface() = default;
 
-    virtual void createWindow() = 0;
-    virtual bool handleEvents() = 0;
+    virtual void createWindow(int width, int height) = 0;
+    virtual bool processEvents() = 0;
     virtual void closeWindow() = 0;
 protected:
-    int32 width;
-    int32 height;
     const char* title = "ExhibitEngine";
     EventDispatcher& eventDispatcher;
-    inline static EventResize eventResize;
+    bool running;
+    bool beenResized;
 };
