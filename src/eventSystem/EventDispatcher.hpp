@@ -20,42 +20,45 @@
 
 #include "Event.hpp"
 
-class EventDispatcher {
-public:
-    using Callback = std::function<void(Event*)>;
-    // Subscribe to a specific event type
-    template <typename EventType>
-    void subscribe(Callback callback) {
-        subscribers[Event::getEventID<EventType>()].push_back(callback);
-    }
+namespace ExhibitEngine{
 
-    // Enqueue an event
-    template <typename EventType>
-    void enqueue(EventType&& event) {
-        eventQueue.push(std::make_unique<EventType>(std::move(event)));
-    }
-
-    // Process all events in the queue
-    void process() {
-        while (!eventQueue.empty()) {
-            std::unique_ptr<Event> event = std::move(eventQueue.front());
-            eventQueue.pop();
-            dispatch(event.get());
+    class EventDispatcher {
+    public:
+        using Callback = std::function<void(Event*)>;
+        // Subscribe to a specific event type
+        template <typename EventType>
+        void subscribe(Callback callback) {
+            subscribers[Event::getEventID<EventType>()].push_back(callback);
         }
-    }
 
-private:
-    std::map<uint32, std::vector<Callback>> subscribers;
-    std::queue<std::unique_ptr<Event>> eventQueue;
+        // Enqueue an event
+        template <typename EventType>
+        void enqueue(EventType&& event) {
+            eventQueue.push(std::make_unique<EventType>(std::move(event)));
+        }
 
-    // Dispatch an event to all relevant callbacks
-    void dispatch(Event* event) {
-        auto it = subscribers.find(event->id);
-        if (it != subscribers.end()) {
-            for (Callback callback : it->second) {
-                callback(event);
+        // Process all events in the queue
+        void process() {
+            while (!eventQueue.empty()) {
+                std::unique_ptr<Event> event = std::move(eventQueue.front());
+                eventQueue.pop();
+                dispatch(event.get());
             }
         }
-    }
-};
 
+    private:
+        std::map<uint32, std::vector<Callback>> subscribers;
+        std::queue<std::unique_ptr<Event>> eventQueue;
+
+        // Dispatch an event to all relevant callbacks
+        void dispatch(Event* event) {
+            auto it = subscribers.find(event->id);
+            if (it != subscribers.end()) {
+                for (Callback callback : it->second) {
+                    callback(event);
+                }
+            }
+        }
+    };
+
+}
