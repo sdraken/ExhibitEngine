@@ -7,10 +7,10 @@
 
 namespace ExhibitEngine{
 
-    class Win32Window : public WindowInterface {
+    class Window : public WindowInterface {
     public:
-        Win32Window(EventDispatcher& eventDispatcher, int32 width, int32 height);
-        ~Win32Window();
+        Window(EventDispatcher& eventDispatcher, int32 width, int32 height);
+        ~Window();
 
         void createWindow(int32 width, int32 height) override;
 

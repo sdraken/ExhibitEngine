@@ -1,11 +1,18 @@
-add_library(externals INTERFACE)
+add_library(external INTERFACE)
 
-#submodules with
+#vulkan libraries
+set(VULKAN_HEADERS_INSTALL_DIR "${CMAKE_SOURCE_DIR}/external/Vulkan-Headers")
+set(VOLK_STATIC_DEFINES VK_USE_PLATFORM_WIN32_KHR)
+add_subdirectory(volk)
+set(VK_BOOTSTRAP_VULKAN_HEADER_DIR "${CMAKE_SOURCE_DIR}/external/Vulkan-Headers/include")
+set(VK_BOOTSTRAP_DISABLE_WARNINGS on)
+add_subdirectory(vk-bootstrap)
+add_subdirectory(VulkanMemoryAllocator)
+
+#other libraries
 add_subdirectory(glm)
 add_subdirectory(tinyobjloader)
-add_subdirectory(Vulkan-Headers)
-add_subdirectory(VulkanMemoryAllocator)
-target_link_libraries(externals INTERFACE Vulkan::Headers GPUOpen::VulkanMemoryAllocator glm::glm tinyobjloader)
+target_include_directories(external INTERFACE stb)
 
-#includes entire stb directory
-target_include_directories(externals INTERFACE stb/)
+target_link_libraries(external INTERFACE  volk::volk vk-bootstrap::vk-bootstrap GPUOpen::VulkanMemoryAllocator
+                                          glm::glm tinyobjloader)

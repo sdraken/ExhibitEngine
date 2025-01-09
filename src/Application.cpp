@@ -10,9 +10,9 @@ void onResize(ExhibitEngine::Event* e) {
 
 namespace ExhibitEngine{
 
-    Application::Application():windowManager(eventDispatcher, 800, 500)
+    Application::Application():window(eventDispatcher, 800, 500), renderer(eventDispatcher, window)
     {
-        eventDispatcher.subscribe<EventResize>(onResize);
+        eventDispatcher.subscribe<EventResize>(onResize); //remove later
     }
 
     Application::~Application()
@@ -21,7 +21,7 @@ namespace ExhibitEngine{
 
     void Application::run()
     {
-        while(windowManager.processEvents()){
+        while(window.processEvents()){
             eventDispatcher.process();
         }
     

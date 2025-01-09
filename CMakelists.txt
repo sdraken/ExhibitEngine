@@ -3,8 +3,8 @@ cmake_minimum_required (VERSION 3.29)
 project ("ExhibitEngine")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
-#add_definitions(-DUNICODE) #for win32 api w functions
-add_executable(ExhibitEngine src/Application.cpp src/windowSystem/win32/Win32Window.cpp)
+#Right now win32 + vulkan is the only implementation, if other implementation are added then cmake needs to take that into account
+add_executable(ExhibitEngine src/Application.cpp src/windowSystem/win32/Window.cpp src/renderSystem/vulkan/Renderer.cpp)
 
 add_subdirectory(external)
-target_link_libraries(ExhibitEngine PRIVATE externals)
+target_link_libraries(ExhibitEngine PRIVATE external)

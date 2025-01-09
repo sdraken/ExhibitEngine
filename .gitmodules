@@ -13,3 +13,9 @@
 [submodule "external/stb"]
 	path = external/stb
 	url = git@github.com:nothings/stb.git
+[submodule "external/volk"]
+	path = external/volk
+	url = git@github.com:zeux/volk.git
+[submodule "external/vk-bootstrap"]
+	path = external/vk-bootstrap
+	url = git@github.com:charles-lunarg/vk-bootstrap.git

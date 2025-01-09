@@ -27,3 +27,9 @@ class WindowInterface {
     };
 
 }
+
+#if defined(_WIN32)
+    #include "win32/Window.hpp"
+#else
+    #error "Unsupported platform"
+#endif

@@ -1,20 +1,20 @@
-#include "Win32Window.hpp"
+#include "../WindowInterface.hpp"
 
 namespace ExhibitEngine{
 
 
-    Win32Window::Win32Window(EventDispatcher& eventDispatcher, int32 width, int32 height):
+    Window::Window(EventDispatcher& eventDispatcher, int32 width, int32 height):
         WindowInterface(eventDispatcher),
         hwnd(nullptr),
         hInstance(GetModuleHandle(nullptr)){
         createWindow(width, height);
     }
 
-    Win32Window::~Win32Window(){
+    Window::~Window(){
         DestroyWindow(hwnd);
     }
 
-    void Win32Window::createWindow(int32 width, int32 height){
+    void Window::createWindow(int32 width, int32 height){
         WNDCLASS wc = {};
         wc.lpfnWndProc = WindowProcStatic;
         wc.hInstance = hInstance;
@@ -38,7 +38,7 @@ namespace ExhibitEngine{
         ShowWindow(hwnd, SW_SHOW);
     }
 
-    bool Win32Window::processEvents(){
+    bool Window::processEvents(){
             MSG msg = {};
             while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
                 TranslateMessage(&msg); // Generate additional messages like WM_CHAR
@@ -59,21 +59,21 @@ namespace ExhibitEngine{
             return running;
     }
 
-    void Win32Window::closeWindow(){
+    void Window::closeWindow(){
         DestroyWindow(hwnd);
     }
 
-    LRESULT CALLBACK Win32Window::WindowProcStatic(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-            Win32Window* pThis = nullptr;
+    LRESULT CALLBACK Window::WindowProcStatic(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+            Window* pThis = nullptr;
 
             if (uMsg == WM_NCCREATE) {
                 CREATESTRUCT* pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
-                pThis = static_cast<Win32Window*>(pCreate->lpCreateParams);
+                pThis = static_cast<Window*>(pCreate->lpCreateParams);
                 SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pThis));
 
                 pThis->hwnd = hwnd;
             } else {
-                pThis = reinterpret_cast<Win32Window*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+                pThis = reinterpret_cast<Window*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
             }
 
             if (pThis) {
@@ -84,7 +84,7 @@ namespace ExhibitEngine{
     }
 
 
-    LRESULT Win32Window::WindowProc(UINT uMsg, WPARAM wParam, LPARAM lParam){
+    LRESULT Window::WindowProc(UINT uMsg, WPARAM wParam, LPARAM lParam){
         switch (uMsg) {
         case WM_DESTROY:
             PostQuitMessage(0);

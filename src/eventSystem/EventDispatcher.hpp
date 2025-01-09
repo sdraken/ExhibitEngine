@@ -12,13 +12,16 @@
 */
 
 #pragma once
+
+#include "Event.hpp"
+
 #include <queue>
 #include <vector>
 #include <map>
 #include <memory>
 #include <functional>
 
-#include "Event.hpp"
+
 
 namespace ExhibitEngine{
 

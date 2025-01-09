@@ -1,6 +1,10 @@
 #pragma once
+
+#include "../core/Types.hpp"
+
 #include <string>
 #include <iostream>
+
 
 namespace ExhibitEngine{
 
